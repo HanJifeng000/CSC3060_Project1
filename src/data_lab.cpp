@@ -4,8 +4,7 @@
 namespace data_lab {
 
 int32_t add(int32_t a, int32_t b) {
-
-    // separate the addition process into 2 parts: sum without carry （using ^）and carry part (using & and <<)
+    // The main thought that we can separate the addition process into 2 parts: sum without carry （using ^）and carry part (using & and <<) is from AI.
     int32_t carry; // the carry part of addition
 
     carry = static_cast<uint32_t>(a & b) << 1; 
@@ -103,7 +102,7 @@ int32_t divide(int32_t a, int32_t b) {
     uint32_t quotient = 0;
     uint32_t remainder = 0;
     
-    // divide algorithm with the help of AI 
+    // divide algorithm with the help of AI (thought + code)
     for (int32_t i = 31; i >= 0; i--) {
         // left shift remainder and bring down the next bit of dividend
         remainder = remainder << 1;
@@ -113,9 +112,10 @@ int32_t divide(int32_t a, int32_t b) {
         uint32_t diff = subtract(remainder, divisor);
         int32_t not_negative = !(static_cast<uint32_t>(diff) >> 31);
         
+        // if remainder >= divisor, update remainder and set the corresponding bit in quotient
         if (not_negative) {
             remainder = diff;
-            quotient = quotient | (1U << i);
+            quotient = quotient | (1U << i); // 1U: transfer default complement 1 to unsigned
         }
     }
     
